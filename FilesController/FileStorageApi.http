@@ -1,0 +1,42 @@
+@host = http://localhost:5000
+
+### Get all files
+GET {{host}}/api/files
+
+### Get file metadata
+GET {{host}}/api/files/1
+
+### Upload public avatar
+POST {{host}}/api/files/avatar
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="avatar.png"
+Content-Type: image/png
+
+< ./test-files/avatar.png
+--boundary--
+
+### Upload private document
+POST {{host}}/api/files/document
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="sample.pdf"
+Content-Type: application/pdf
+
+< ./test-files/sample.pdf
+--boundary
+Content-Disposition: form-data; name="description"
+
+Тестовий PDF документ
+--boundary--
+
+### Download file with original name
+GET {{host}}/api/files/1/download
+
+### Preview file in browser
+GET {{host}}/api/files/1/preview
+
+### Delete file
+DELETE {{host}}/api/files/1
